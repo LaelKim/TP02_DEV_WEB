@@ -4,13 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TP02 WebAR — Exercice 6 (DOM overlay + marker events)</title>
-  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <!-- AR.js pour A‑Frame -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
   <style>
     body{margin:0; overflow:hidden; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial}
-    /* Panneau d'UI en overlay (DOM) */
     .ui {
       position: fixed; inset: auto 12px 12px auto; /* bottom-right */
       display: none; /* Masqué par défaut, affiché quand markerFound */
@@ -37,12 +34,10 @@
   </style>
 </head>
 <body>
-  <div class="banner">Autorisez la caméra. L'UI apparaît seulement quand <b>Hiro</b> est visible.</div>
 
   <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-    <!-- Marqueur Hiro -->
     <a-marker preset="hiro" id="hiro" emitevents="true">
-      <!-- Boîte contrôlée par l'UI -->
+      <!--UI -->
       <a-box id="box" position="0 0.5 0" depth="1" height="1" width="1" color="#4CC3D9" opacity="0.85"
              animation__spin="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
       </a-box>
@@ -51,7 +46,7 @@
     <a-entity camera></a-entity>
   </a-scene>
 
-  <!-- UI DOM Overlay -->
+  <!--Overlay -->
   <div id="ui" class="ui">
     <div style="font-weight:600; margin-bottom:6px">Contrôles de la boîte</div>
     <div class="row">
@@ -87,7 +82,7 @@
       ui.style.display = 'block';
     }
 
-    // Slider → change l'échelle (uniforme) en temps réel
+    // Slide
     const setScale = (s) => {
       const v = Math.max(0.1, Math.min(3.0, Number(s)));
       box.setAttribute('scale', `${v} ${v} ${v}`);
@@ -95,20 +90,17 @@
     };
     slider.addEventListener('input', (e) => setScale(e.target.value));
 
-    // Palette de couleurs → change immédiat
+    // Palette
     document.querySelectorAll('.chip').forEach((btn) => {
       btn.addEventListener('click', () => {
         const c = btn.dataset.color;
         box.setAttribute('color', c);
-        // petit feedback: pulse rapide
         box.setAttribute('animation__pulse', {
           property: 'scale', dir: 'alternate', dur: 200, loop: 2, to: '1.15 1.15 1.15', easing: 'easeOutQuad'
         });
         setTimeout(() => box.removeAttribute('animation__pulse'), 450);
       });
     });
-
-    // Valeur initiale
     setScale(slider.value);
   </script>
 </body>
