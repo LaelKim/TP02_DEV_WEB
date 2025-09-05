@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exo2</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+  <style>body{margin:0; overflow:hidden}</style>
+</head>
+<body>
+  <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    <!-- Marqueur Hiro -->
+    <a-marker preset="hiro" id="hiroMarker">
+      <!-- Boîte semi-transparente qui tourne en continu -->
+      <a-box id="spinBox" position="0 0.5 0" depth="1" height="1" width="1" color="#4CC3D9" opacity="0.6"
+             animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+      </a-box>
+    </a-marker>
+
+    <!-- Caméra AR -->
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>
