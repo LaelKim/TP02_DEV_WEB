@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TP02 WebAR — Exercice 3 (Interaction clic/tap)</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+  <style>body{margin:0; overflow:hidden}</style>
+</head>
+<body>
+  <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    <a-marker preset="hiro" id="hiroMarker">
+      <a-box id="spinBox" class="clickable" position="0 0.5 0" depth="1" height="1" width="1"
+             color="#4CC3D9" opacity="0.7"
+             animation__spin="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+      </a-box>
+    </a-marker>
+
+    <a-entity camera look-controls
+              cursor="fuse: false; rayOrigin: mouse"
+              raycaster="objects: .clickable; interval: 0; far: 20">
+    </a-entity>
+  </a-scene>
+
+  <script>
+    const COLORS = ["#e11d48", "#22c55e", "#3b82f6", "#f59e0b", "#a78bfa"];
+    const pickColor = (exclude) => {
+      const choices = COLORS.filter(c => c !== exclude);
+      return choices[Math.floor(Math.random() * choices.length)];
+    };
+
+    const box = document.querySelector('#spinBox');
+
+    box.addEventListener('click', () => {
+      const current = box.getAttribute('color');
+      const next = pickColor(current);
+      box.setAttribute('color', next);
+
+      const originalDur = 4000;
+      const boostedDur = 800;
+      box.setAttribute('animation__spin', {
+        property: 'rotation', to: '0 360 0', loop: true, dur: boostedDur, easing: 'linear'
+      });
+
+      box.setAttribute('animation__pulse', {
+        property: 'scale', dir: 'alternate', dur: 250, loop: 2, to: '1.4 1.4 1.4', easing: 'easeOutQuad'
+      });
+
+      setTimeout(() => {
+        box.setAttribute('animation__spin', {
+          property: 'rotation', to: '0 360 0', loop: true, dur: originalDur, easing: 'linear'
+        });
+        box.removeAttribute('animation__pulse');
+      }, 1200);
+    });
+
+    box.addEventListener('mouseenter', () => box.setAttribute('opacity', 0.9));
+    box.addEventListener('mouseleave', () => box.setAttribute('opacity', 0.7));
+  </script>
+</body>
+</html>
