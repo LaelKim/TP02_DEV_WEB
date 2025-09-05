@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TP02 WebAR — Exercice 1 (A‑Frame)</title>
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <style>
+    body { margin: 0; }
+  </style>
+</head>
+<body>
+  <!-- Scène 3D A‑Frame (non-AR) -->
+  <a-scene>
+    <!-- Lumières pour bien voir les objets -->
+    <a-entity light="type: ambient; intensity: 0.6"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
+
+    <!-- Plan au sol -->
+    <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#7BC8A4"></a-plane>
+
+    <!-- Trois boîtes lévitant à y=2 -->
+    <a-box position="-4 2 -3" depth="2" height="2" width="2" color="#EF2D5E"></a-box>
+    <a-box position="0 2 0" depth="2" height="2" width="2" color="#4CC3D9"></a-box>
+    <a-box position="4 2 3" depth="2" height="2" width="2" color="#FFC65D"></a-box>
+
+    <!-- Caméra à 10 de hauteur et 15 de distance, orientée vers le centre -->
+    <!-- angle vers le bas ≈ arctan(10/15) ≈ 34° -->
+    <a-entity position="0 10 15" rotation="-34 0 0">
+      <a-camera></a-camera>
+    </a-entity>
+
+    <!-- Ciel simple -->
+    <a-sky color="#ECECEC"></a-sky>
+  </a-scene>
+</body>
+</html>
